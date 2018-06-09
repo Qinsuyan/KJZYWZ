@@ -1,4 +1,4 @@
-var server = "";
+const server = "";
 $(document).ready(function () {
     /*$.get(server + keyword, function (data, status) {
         if (data.ItemsCount == 0) {

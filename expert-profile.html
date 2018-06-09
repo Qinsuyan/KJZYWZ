@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/app.css">
+    <title>专家资料</title>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Static navbar -->
+    <nav class="navbar navbar-inverse  ">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" >科技资源分享平台</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="login.html">登录</a></li>
+                    <li><a href="register.html">注册</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--路径导航-->
+    <ol class="breadcrumb">
+        <li><a href="#">主页</a></li>
+        <li class="active">专家</li>
+    </ol>
+    <!--介绍  -->
+    <div style="margin-top: 10px;margin-bottom:30px" class="row">
+        <div class="col-lg-4 col-sm-4 col-md-4">
+            <div style="height: 600px" class="thumbnail">
+                <img src="img/xcbz.png" alt="...">
+                <div class="caption">
+                    <h3>某教授</h3>
+                    <p>BM认证AIX系统管理员，IBM认证DB2系统管理员。较丰富的MIS、GIS、网络通信和信息安全方面的开发经验。目前研究领域包括：嵌入式系统开发、信息安全、软件开发技术。
+                        原仓周副教授在上课时很注重对学生理解能力的培养，而不是死记硬背；上课风趣幽默，被同学们亲切地称为“仓老师”。在考试的时候，也是着重理解，经常不按套路出题，造成同学们在考试的时候很困惑（明明应该开卷的题却出成闭卷），考完试也有所不满，这种方法对培养学生的自主学习能力是没有裨益的。</p>
+                </div>
+            </div>
+        </div>
+        <div style="max-height: 600px;overflow: scroll" class="col-lg-8 col-md-8 col-sm-8">
+            <label class="list-title">列表</label>
+            <ul  class="list-group">
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+                <a class="list-group-item">Cras justo odio</a>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div id="pie-chart" class="col-sm-6 col-md-4">
+
+        </div>
+        <div class="col-sm-6 col-md-4">
+
+        </div>
+        <div class="col-sm-6 col-md-4">
+
+        </div>
+    </div>
+    <div id='main' style='width:600px;height:400px;'></div>
+
+    </div>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.js" ></script>
+    <script src="js/vue.js"></script>
+    <script src="js/echarts.js"></script>
+    <script src="js/expert-profile.js"></script>
+</body>
+</html>
