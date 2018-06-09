@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="js/Login.js"></script>
+    <script type='text/javascript' src='js/jquery.min.js' charset='utf-8'></script>
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Static navbar -->
+
+
+
+
+
+    <nav class="navbar navbar-inverse  ">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">科技资源分享平台</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Home</a></li>
+
+
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="Login.html">登录</a></li>
+                    <li><a href="Register.html">注册</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </nav>
+    <div class="jumbotron">
+        <h1>注册成为平台用户</h1>
+        <p><input type="checkbox" id="checkboxvalue"  onclick="checkAgree()" style="zoom:180%;" >在我注册成为平台用户前，我已经了解了相关法律法规以及本站的相应规则声明。</p>
+        <p id = "warning-text" style="font-size: small;color:red;visibility: hidden">请先勾选同意</p>
+    </div>
+
+    <h3>输入您的用户名</h3>
+
+    <div class="input-group input-group-lg">
+        <span class="input-group-addon" >UserName</span>
+        <input type="text" class="form-control" id="UserName_R"  aria-describedby="sizing-addon1">
+    </div>
+
+    <h3>输入您的密码</h3>
+    <div class="input-group input-group-lg">
+        <span class="input-group-addon" >PassWord</span>
+
+        <input type="password" class="form-control"  id="PassWord_R" aria-describedby="sizing-addon1">
+    </div>
+
+
+    <h2>个人简介</h2>
+
+    <form role="form">
+        <div class="form-group">
+            <textarea class="form-control" rows="5" id = "SelfDescription"></textarea>
+        </div>
+    </form>
+
+    <center><button type="button" class="btn btn-primary btn-lg " id = "RegisterButton" onclick="Register()" >提交</button></center>
+</div>
+</body>
+</html>
