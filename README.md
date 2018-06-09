@@ -11,3 +11,4 @@
     * Bootstrap
     * fileinput
     * jQuery
+    * eCharts
