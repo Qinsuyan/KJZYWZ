@@ -60,7 +60,7 @@ function Login()
 
                     var exp = new Date();
                     exp.setHours(exp.getHours()+24*7);
-                    document.cookie = 'SmartChainToken' + "=" +  data.SmartChainToken + ";expires="+ exp.toUTCString();
+                    document.cookie = 'KJZYToken' + "=" +  data.SmartChainToken + ";expires="+ exp.toUTCString();
 
                 }
                 else if (data.status == "-1") {
@@ -99,7 +99,7 @@ function Register(){
     formData.append("user_passwd",PassWord);
     formData.append("")
 
-    /*$.ajax({
+    $.ajax({
         type: 'POST',
         url: server,
         data: formData
@@ -118,7 +118,7 @@ function Register(){
             }
             return true;
         }
-    });*/
+    });
 
 }
 
@@ -126,4 +126,27 @@ function checkAgree(){
     if( $(" p[ id='warning-text'] ").css("visibility") == "visible"){
         $(" p[ id='warning-text'] ").css("visibility", "hidden");
     }
+}
+
+function changeSearchKey(e) {
+
+    $('#SearchBar').find('li').each(function(){
+        console.log("1");
+        $(this).removeClass("active");
+    })
+    $(e).addClass("active");
+
+}
+
+function Search() {
+    var i = 1;
+    var target = 0 ;
+    $('#SearchBar').find('li').each(function () {
+        if ($(this).hasClass("active")) {
+            target = i;
+        }
+        i++;
+    })
+    //console.log(target);
+
 }

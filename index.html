@@ -56,14 +56,34 @@
         <input type="text" class="form-control" aria-label="...">
 
         <span class="input-group-btn">
-        <button class="btn btn-default" type="button">搜索</button>
+        <button class="btn btn-default" type="button" onclick="Search">搜索</button>
       </span>
 
     </div>
+
+    <div class="bs-example" style="margin-top: 3%" data-example-id="table-within-panel">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading" style="text-align: center"><h3>搜索结果</h3></div>
+
+            <div class="list-group" id="SearchResultList">
+                <a href="#" class="list-group-item"  v-for="resource in resultList">
+                    <h4 class="list-group-item-heading">{{resource.name}}</h4>
+                    <p class="list-group-item-text">{{resource.author}}</p>
+                    <p class="list-group-item-text">{{resource.institution}}</p>
+                </a>
+            </div>
+
+        </div>
     </div>
-    <script src='js/jquery.min.js'></script>
+
+
+
+    </div>
+    <script src='js/jquery-3.3.1.js'></script>
     <script src="js/bootstrap.js" ></script>
     <script src="js/vue.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/Search.js"></script>
 </body>
 </html>
