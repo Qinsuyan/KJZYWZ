@@ -66,9 +66,13 @@
         </div>
     </form>
 
-
+    <h3>是否要设置头像？</h3>
+    <button id="SetImage" onclick="SetImage()"  class="btn btn-primary">是</button>
+    <button id="NotSetImage" onclick="NotSetImage()"  class="btn btn-primary">否</button>
+    <div id="image_upload_area" class="hidden">
     <h2>设置头像</h2>
-    <input id="f_upload" type="file" class="file" data-allowed-file-extensions='["jpg","png"]' />
+    <input id="image_upload" type="file" class="file" data-allowed-file-extensions='["jpg","png"]' />
+    </div>
 
     <center><button type="button" class="btn btn-primary btn-lg " id = "RegisterButton" onclick="Register()" >提交</button></center>
 </div>
