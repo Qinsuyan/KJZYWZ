@@ -11,7 +11,7 @@
 <div class="container">
 
     <!-- Static navbar -->
-    <nav class="navbar navbar-inverse  ">
+    <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -38,6 +38,7 @@
                     <li><a id="Bar_UserId" :href="['user.html?user_id='+LoginUserId]">我的信息</a></li>
                     <li><a href="register.html" onclick="LogOut()">登出</a></li>
                 </ul>
+
             </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
     </nav>
@@ -69,13 +70,14 @@
     <div class="bs-example" style="margin-top: 3%" data-example-id="table-within-panel">
         <div class="panel panel-default">
             <!-- Default panel contents -->
-            <div class="panel-heading" style="text-align: center"><h3>搜索结果</h3></div>
+            <div class="panel-heading hidden" style="text-align: center" id="SearchTitle" ><h3>搜索结果</h3></div>
 
             <div class="list-group" id="SearchResultList">
-                <a v-bind:href="resource.id" class="list-group-item"  v-for="resource in resultList">
+                <a v-bind:href="['resource.html?resource_id='+resource.id]" class="list-group-item"  v-for="resource in resultList">
                     <h4 class="list-group-item-heading">{{resource.name}}</h4>
                     <p class="list-group-item-text">{{resource.author}}</p>
-                    <p class="list-group-item-text">{{resource.institution}}</p>
+                    <p class="list-group-item-heading">类型：{{resource.type}}</p>
+                    <p class="list-group-item-text" >{{resource.focus}}</p>
                 </a>
             </div>
 

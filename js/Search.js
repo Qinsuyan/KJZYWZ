@@ -1,4 +1,4 @@
-
+/*
 var myList = [
     {
         id:1,
@@ -39,8 +39,7 @@ new Vue({
             myList[result].id  = 'resource.html?resource_id='+ myList[result].id;
             console.log( myList[result].id);
         }
-       /* $.get(url, function (data) {
 
-        })*/
     }
 })
+*/
