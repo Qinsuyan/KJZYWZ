@@ -25,7 +25,8 @@ $(document).ready(function () {
         $("#Nav_Bar_UnLogin").addClass("hidden");
         Vue.set(datatest,'LoginUserId',userid);
     }else{
-        
+        $("#Nav_Bar_Logined").addClass("hidden");
+        $("#Nav_Bar_UnLogin").removeClass("hidden");
     }
 
     console.log(LoginUserId);
