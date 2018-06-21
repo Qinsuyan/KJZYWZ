@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/user.css">
+    <title>专家资料</title>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Static navbar -->
+    <nav class="navbar navbar-inverse  ">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" >科技资源分享平台</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right" id="Nav_Bar_UnLogin">
+                    <li><a href="login.html">登录</a></li>
+                    <li><a href="register.html">注册</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="Nav_Bar_Logined" class="hidden">
+                    <li><a id="Bar_UserId" :href="['user.html?user_id='+LoginUserId]">我的信息</a></li>
+                    <li><a href="register.html" onclick="LogOut()">登出</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--路径导航-->
+    <ol class="breadcrumb">
+        <li><a href="index.html">主页</a></li>
+        <li class="active">个人信息</li>
+    </ol>
+    <!--介绍  -->
+    <div style="margin-top: 10px;margin-bottom:30px" class="row">
+        <div class="col-lg-4 col-sm-4 col-md-4">
+            <div id="expert_info" style="height: 600px" class="thumbnail">
+                <img :src="image_url" alt="...">
+                <div class="caption">
+                    <h3>{{ name }}</h3>
+                    <p>{{ info }}</p>
+                    <h4 role="private">当前积分</h4>
+                    <p  role="private">{{ point }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            <h3 style="text-align: center">科技成果</h3>
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active" onclick="change_show(this)"><a href="#">购买的成果</a></li>
+                <li role="presentation expert_only" onclick="change_show(this)"><a href="#">论文</a></li>
+                <li role="presentation expert_only" onclick="change_show(this)"><a href="#">其他成果</a></li>
+            </ul>
+            <div style="max-height: 500px; overflow-y: auto" id="expert_res">
+                <ul  class="list-group" v-for="res in resources">
+                    <a class="list-group-item" :href="res.url">{{ res.title }}</a>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center">
+            <button role="private" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#buy_point">购买积分</button>
+            <button role="private" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#change_info">修改个人信息</button>
+            <button role="private" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#upload_res">添加成果</button>
+    </div>
+    <!-- 按钮触发模态框 -->
+    <!-- 添加成果 -->
+    <div class="modal fade" id="upload_res"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">添加成果</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs">
+                        <li role="pre_upload" class="active" onclick="change_upload(this)"><a href="#">论文</a></li>
+                        <li role="pre_upload" onclick="change_upload(this)"><a href="#">其他成果</a></li>
+                    </ul>
+                    <div class="input-group input-group-lg" style="margin-top: 5px">
+                        <span class="input-group-addon" >名称</span>
+                        <input type="text" class="form-control" id="res_name"  aria-describedby="sizing-addon1">
+                    </div>
+                    <div class="input-group input-group-lg" style="margin-top: 5px">
+                        <span class="input-group-addon" >简介</span>
+                        <input type="text" class="form-control" id="res_info"  aria-describedby="sizing-addon1">
+                    </div>
+                    <div role="other_res" class="input-group input-group-lg" style="margin-top: 5px">
+                        <span class="input-group-addon" >关键词</span>
+                        <input type="text" class="form-control" id="res_keyword"  aria-describedby="sizing-addon1">
+                    </div>
+                    <div role="other_res" class="input-group input-group-lg" style="margin-top: 5px">
+                        <span class="input-group-addon">价格</span>
+                        <input type="number" class="form-control" id="res_val"  aria-describedby="sizing-addon1">
+                    </div>
+                    <div role="other_res" class="input-group input-group-lg" style="margin-top: 5px">
+                        <span class="input-group-addon">上传文件</span>
+                        <input id="paper_upload" type="file" class="file" accept="application/pdf" onchange="triggerfile()"/>
+                        <label id="file_label" for="paper_upload">选择文件</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="upload_res()">提交</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 添加成果 end -->
+    <!-- 购买积分 -->
+    <div class="modal fade" id="buy_point"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">购买积分</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-lg" style="margin-top: 5px">
+                        <span class="input-group-addon">积分</span>
+                        <input type="number" class="form-control" id="point_num"  aria-describedby="sizing-addon1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="buy_point()">提交</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 购买积分 end -->
+    <!-- 修改个人信息 -->
+    <div class="modal fade" id="change_info"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">修改个人信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-lg" style="margin-top: 5px">
+                        <span class="input-group-addon">简介</span>
+                        <input class="form-control" id="user_info"  aria-describedby="sizing-addon1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="change_info()">提交</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 修改个人信息 end -->
+    <!-- modal end -->
+    <!-- 下面开始关系网 -->
+    <div class="row">
+        <div id="graph-chart" class="col-sm-6 col-md-4">
+        </div>
+    </div>
+    <div id='main' style='width:600px;height:400px;'></div>
+
+</div>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.js" ></script>
+    <script src="js/vue.js"></script>
+    <script src="js/echarts.js"></script>
+    <script src="js/user.js"></script>
+</body>
+</html>
