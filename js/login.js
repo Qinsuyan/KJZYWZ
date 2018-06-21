@@ -1,7 +1,6 @@
 const server = "";
 var LoginUserId = 0;
 var AlreadyLogin = false;
-localStorage.setItem("LoginIN",123498);
 var datatest = {
     LoginUserId:0
 }
@@ -9,18 +8,28 @@ new Vue({
     el: '#Bar_UserId',
     data: datatest,
 })
+function getPath(file) {
+    var url=null
+    if(window.createObjectURL!=undefined){ // basic
+        url=window.createObjectURL(file)
+    }else if(window.URL!=undefined){ // mozilla(firefox)
+        url=window.URL.createObjectURL(file)
+    } else if(window.webkitURL!=undefined){ // webkit or chrome
+        url=window.webkitURL.createObjectURL(file)
+    }
+    return url  ;
+}
+
 $(document).ready(function () {
+
+
     var userid = 3;
     userid = localStorage.getItem("LoginIN");
-
-
     if(userid==null){
         AlreadyLogin = false;
     }else{
         AlreadyLogin = true;
     }
-
-
     if(AlreadyLogin){
         $("#Nav_Bar_UnLogin").removeClass("hidden");
         $("#Nav_Bar_Logined").removeClass("hidden");
@@ -33,6 +42,14 @@ $(document).ready(function () {
     }
     console.log(LoginUserId);
     console.log("reamklkljkljkljjkljklkldy");
+
+    $("#image_upload").bind("input propertychange",function () {
+        //console.log(getPath(document.getElementById("image_upload")));
+        $("#image_paint").html(
+            "<img style='max-height: 100%' src="+getPath(document.getElementById("image_upload").files[0])+">"
+        );
+
+    })
 });
 function LogOut(){
     localStorage.removeItem("LoginIN");
@@ -56,7 +73,7 @@ function Login()
 
     if(flag == 1) {
         var formData = new FormData();
-        formData.append("user_name", UserName);
+        formData.append("name", UserName);
         formData.append("passwd", PassWord);
         $.ajax({
             type: 'POST',
@@ -68,17 +85,16 @@ function Login()
             processData: false,
             success: function (data) {
                 console.log(data);
-                if (data.status == "0") {
-                    alert("SUcces.");
+                if (parseInt(data)!=NaN) {
+                    alert("Success.");
                     var AlreadyLoginUserId = data;
                     localStorage.setItem("LoginIN",data);
-
                 }
-                else if (data.status == "-1") {
+                else {
                     alert("Error");s
                 }
+                window.location.replace("index.html");
                 return true;
-
             }
         });
     }
@@ -104,35 +120,14 @@ function Register(){
             successflag = 0;
         }
     }
-    console.log(UserName);
-    console.log(PassWord);
-    console.log(SelfDescription);
+    var Image = document.getElementById("image_upload").files[0];
+    console.log(Image);
 
 
 
-    $("#image_upload").fileinput({
-        uploadUrl:"http://149.28.199.19:8888/user/",
-        allowedFileExtensions: ['jpg', 'png'],//接收的文件后缀
-        uploadExtraData:{"name": UserName, "passwd":PassWord},
-        uploadAsync:true,
-        browseClass: "btn btn-primary", //按钮样式
-        showCaption: false,//是否显示标题
-        maxFileCount: 1, //表示允许同时上传的最大文件个数
-        enctype: 'multipart/form-data',
-        validateInitialCount:true,
-    })
+
 }
-$("#image_upload_area").on("fileuploaded", function (event, data, previewId, index) {
 
-
-});
-
-function SetImage(){
-    $("#image_upload_area").removeClass("hidden");
-}
-function NotSetImage(){
-    $("#image_upload_area").addClass("hidden");
-}
 function checkAgree(){
     if( $(" p[ id='warning-text'] ").css("visibility") == "visible"){
         $(" p[ id='warning-text'] ").css("visibility", "hidden");
@@ -184,8 +179,10 @@ function Search() {
             break;
         case '专家':
             typenum = 2;
+            searchByExpertName(keyword);
             break;
         case '科研机构':
+            searchByInstitution(keyword);
             typenum = 3;
             break;
         case '标签':
@@ -252,7 +249,6 @@ function searchByResourceName(keyword){
                         }
                     })
                 }
-
                 var a={
                     id:resource_id,
                     name:resource_name,
@@ -263,4 +259,73 @@ function searchByResourceName(keyword){
             }
         }
     });
+}
+
+function searchByExpertName(keyword){
+    console.log(keyword);
+    if(keyword==""){
+        alert("不能为空！");
+        return ;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: 'http://149.28.199.19:8888/user/Expert/?name='+keyword,
+        contentType: false,
+        async: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+            for(index in data.ownresources){
+                var formdata = new FormData();
+                formdata.append("id",data.ownresources[index]);
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://149.28.199.19:8888/resource/SearchExpert/',
+                    contentType: false,
+                    async: false,
+                    cache: false,
+                    processData: false,
+                    success:function(data){
+
+                        var resource_id = data.ownresources[index];
+                        var resource_name = data.name;
+                        var resource_type = data.type;
+                        var resource_labels = data.ownlabels;
+                        var resource_foucs = "Focus:";
+
+                        for( indexx in resource_labels){
+
+                            $.ajax({
+                                type: 'GET',
+                                url: 'http://149.28.199.19:8888/label/'+resource_labels[indexx]+'/',
+                                contentType: false,
+                                async: false,
+                                cache: false,
+                                processData: false,
+                                success:function(data){
+                                    resource_foucs = resource_foucs + data.name+',';
+                                }
+                            })
+                        }
+                        var a={
+                            id:resource_id,
+                            name:resource_name,
+                            type:resource_type,
+                            focus:resource_foucs.substring(0,resource_foucs.length-1),
+                        };
+                        myList.push(a);
+                    }
+
+
+                })
+
+            }
+        }
+    });
+}
+
+
+function searchByInstitution(keyWord){
+
 }
