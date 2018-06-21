@@ -1,29 +1,41 @@
 const server = "";
+var LoginUserId = 0;
+var AlreadyLogin = false;
+var datatest = {
+    LoginUserId:0
+}
+new Vue({
+    el: '#Bar_UserId',
+    data: datatest,
+})
 $(document).ready(function () {
-    /*$.get(server + keyword, function (data, status) {
-        if (data.ItemsCount == 0) {
-            $.alert("We are broken!");
-        }
-        else {
-            for (i = 0; i < 20; i++)//for (i=0;i<data.ItemsCount;i++)
-            {
+    var userid = 3;
+    userid = localStorage.getItem("LoginIN");
 
-                str1 = data.Items[i].ItemName;
-                if (str1.length > 10) {
-                    str1 = str1.slice(0, 9) + "...";
-                }
-                str3 = data.Items[i].Description;
-                if (str3.length > 20) {
-                    str3 = str3.slice(4, 19) + "...";
-                }
-                str5 = data.Items[i].Image;
-                str7 = "￥" + data.Items[i].Price / 100;
-                $("#hometable").append(str_start_0 + data.Items[i].ItemID + str_start_1 + str1 + str2 + str3 + str4 + str5 + str6 + str7 + str8);
-            }
-        }
-    })*/
+
+    if(userid==null){
+        AlreadyLogin = false;
+    }else{
+        AlreadyLogin = true;
+    }
+
+
+    if(AlreadyLogin){
+        $("#Nav_Bar_Logined").removeClass("hidden");
+        $("#Nav_Bar_UnLogin").addClass("hidden");
+        Vue.set(datatest,'LoginUserId',userid);
+    }else{
+        
+    }
+
+    console.log(LoginUserId);
+
+    console.log("reamklkljkljkljjkljklkldy");
+
 });
+function LogOut(){
 
+}
 function Login()
 {
     var UserName = $(" input[ id='UserName'] ").val();
@@ -43,30 +55,29 @@ function Login()
 
     if(flag == 1) {
         var formData = new FormData();
-        formData.append("UserName", UserName);
-        formData.append("Password", PassWord);
+        formData.append("user_name", UserName);
+        formData.append("passwd", PassWord);
         $.ajax({
             type: 'POST',
-            url: server,
+            url: 'http://149.28.199.19:8888/user/User/Login/',
             data: formData,
             contentType: false,
             async: false,
             cache: false,
             processData: false,
             success: function (data) {
-
+                console.log(data);
                 if (data.status == "0") {
                     alert("SUcces.");
-
-                    var exp = new Date();
-                    exp.setHours(exp.getHours()+24*7);
-                    document.cookie = 'KJZYToken' + "=" +  data.SmartChainToken + ";expires="+ exp.toUTCString();
+                    var AlreadyLoginUserId = data;
+                    localStorage.setItem("LoginIN",data);
 
                 }
                 else if (data.status == "-1") {
                     alert("Error");s
                 }
                 return true;
+
             }
         });
     }
@@ -147,12 +158,14 @@ function Search() {
     })*/
 
     //console.log(target);
+    var keyword = $(" input[ id='SearchText'] ").val();
     var type = $("[role='presentation'].active").text();
     console.log(type);
     var typenum;
     switch(type){
         case '科技成果':
             typenum = 1;
+            searchByResourceName(keyword);
             break;
         case '专家':
             typenum = 2;
@@ -164,8 +177,9 @@ function Search() {
             typenum = 4;
             break;
     }
-
 }
 
 
+function searchByResourceName(keyword){
 
+}
