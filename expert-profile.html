@@ -24,9 +24,16 @@
                 <a class="navbar-brand" >科技资源分享平台</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="Nav_Bar_UnLogin">
                     <li><a href="login.html">登录</a></li>
                     <li><a href="register.html">注册</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right" id="Nav_Bar_Logined" class="hidden">
+                    <li><a id="Bar_UserId" :href="['user.html?user_id='+LoginUserId]">我的信息</a></li>
+                    <li><a href="register.html" onclick="LogOut()">登出</a></li>
                 </ul>
             </div>
         </div>
