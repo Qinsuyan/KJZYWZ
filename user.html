@@ -57,8 +57,8 @@
             <h3 style="text-align: center">科技成果</h3>
             <ul class="nav nav-tabs">
                 <li role="presentation" class="active" onclick="change_show(this)"><a href="#">购买的成果</a></li>
-                <li role="presentation expert_only" onclick="change_show(this)"><a href="#">论文</a></li>
-                <li role="presentation expert_only" onclick="change_show(this)"><a href="#">其他成果</a></li>
+                <li role="presentation" role="expert_only" onclick="change_show(this)"><a href="#">论文</a></li>
+                <li role="presentation" role="expert_only" onclick="change_show(this)"><a href="#">其他成果</a></li>
             </ul>
             <div style="max-height: 500px; overflow-y: auto" id="expert_res">
                 <ul  class="list-group" v-for="res in resources">
@@ -159,11 +159,7 @@
     <!-- 修改个人信息 end -->
     <!-- modal end -->
     <!-- 下面开始关系网 -->
-    <div class="row">
-        <div id="graph-chart" class="col-sm-6 col-md-4">
-        </div>
-    </div>
-    <div id='main' style='width:600px;height:400px;'></div>
+    <div id="graph-chart" class="col-sm-6 col-md-4" style='width:600px;height:400px;margin-left: 25%'></div>
 
 </div>
     <script src="js/jquery-3.3.1.js"></script>

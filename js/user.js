@@ -18,6 +18,7 @@ var e_res = new Vue ({
 })
 
 const server = "";
+var AlreadyLogin = false;
 var id = 0;
 var type = '';
 var res_paper = [];
@@ -57,12 +58,12 @@ $(document).ready(function () {
         console.log(response);
         e_info.name = response.name;
         e_info.info = response.introduction || '这个人没有自我介绍';
-        e_info.image_url = response.image || 'img/xcbz.png';
+        e_info.image_url = response.image || 'img/default.jpg';
         e_info.point = response.point || 0;
         type = response.type;
         res_buy = response.buyresources;
     })
-    if(type.length == 0)
+    if(type == null)
     {
         $("[role='expert_only']").addClass('hidden');
         $('#graph-chart').addClass('invisible');
@@ -83,7 +84,7 @@ $(document).ready(function () {
         for(r_id in temps)
         {
             var res_settings = {
-                "async": false,
+                "async": true,
                 "crossDomain": true,
                 "url": "http://149.28.199.19:8888/resource/" + temps[r_id] + "/",
                 "method": "GET",
@@ -104,11 +105,11 @@ $(document).ready(function () {
         };
 
         var form = new FormData();
-        form.append("name", r_name);
+        form.append("name", e_info.name);
         var rel_settings = {
-            "async": false,
+            "async": true,
             "crossDomain": true,
-            "url": "http://149.28.199.19:8888/user/relation/ExpertRelation",
+            "url": "http://149.28.199.19:8888/relation/ExpertRelation/",
             "method": "POST",
             "headers": {},
             "processData": false,
@@ -118,7 +119,7 @@ $(document).ready(function () {
         };
         $.ajax(rel_settings).done(function (response) {
             console.log(response);
-            rel_exp = response;
+            rel_exp = response.expert_relation;
         });
     }
     e_res.resources = res_buy;
@@ -216,7 +217,7 @@ function upload_res() {
     form.append("value", r_value);
 
     var settings = {
-        "async": false,
+        "async": true,
         "crossDomain": true,
         "url": "http://149.28.199.19:8888/resource/paper/",
         "method": "POST",
@@ -278,7 +279,7 @@ function showGraph() {
 
     for(i in rel_exp) {
         data.push({
-            name: rel_exp[i],
+            name: rel_exp,
             id: data.length
         });
         var source = 0;
