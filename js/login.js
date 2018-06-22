@@ -22,12 +22,9 @@ function getPath(file) {
 
 $(document).ready(function () {
 
-<<<<<<< Updated upstream
-
     var userid = 3;
     userid = localStorage.getItem("LoginIN");
-=======
->>>>>>> Stashed changes
+
     if(userid==null){
         AlreadyLogin = false;
     }else{
@@ -44,7 +41,6 @@ $(document).ready(function () {
         $("#Nav_Bar_Logined").addClass("hidden");
     }
     console.log(LoginUserId);
-<<<<<<< Updated upstream
     console.log("reamklkljkljkljjkljklkldy");
 
     $("#image_upload").bind("input propertychange",function () {
@@ -54,6 +50,7 @@ $(document).ready(function () {
         );
 
     })
+
 });
 function LogOut(){
     localStorage.removeItem("LoginIN");
@@ -239,8 +236,7 @@ function searchByResourceName(keyword){
                 var resource_name = data[index].name;
                 var resource_type = data[index].type;
                 var resource_labels = data[index].ownlabels;
-                var resource_foucs = "Foucs:"
-
+                var resource_foucs = "Foucs:";
                 for( indexx in resource_labels){
                     $.ajax({
                         type: 'GET',
@@ -253,6 +249,7 @@ function searchByResourceName(keyword){
                             resource_foucs = resource_foucs + data.name+',';
                         }
                     })
+
                 }
                 var a={
                     id:resource_id,

@@ -57,8 +57,8 @@
             <h3 style="text-align: center">科技成果</h3>
             <ul class="nav nav-tabs">
                 <li role="presentation" class="active" onclick="change_show(this)"><a href="#">购买的成果</a></li>
-                <li role="presentation" role="expert_only" onclick="change_show(this)"><a href="#">论文</a></li>
-                <li role="presentation" role="expert_only" onclick="change_show(this)"><a href="#">其他成果</a></li>
+                <li role="presentation" name="expert_only" onclick="change_show(this)"><a href="#">论文</a></li>
+                <li role="presentation" name="expert_only" onclick="change_show(this)"><a href="#">其他成果</a></li>
             </ul>
             <div style="max-height: 500px; overflow-y: auto" id="expert_res">
                 <ul  class="list-group" v-for="res in resources">
@@ -68,10 +68,10 @@
         </div>
     </div>
     <div style="text-align: center">
-            <button role="private" role="user_only" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#be_expert">申请成为专家</button>
+            <button role="private" id="user_btn" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#be_expert">申请成为专家</button>
             <button role="private" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#buy_point">购买积分</button>
             <button role="private" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#change_info">修改个人信息</button>
-            <button role="private" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#upload_res">添加成果</button>
+            <button role="private" id="expert_btn" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#upload_res">添加成果</button>
     </div>
     <!-- 按钮触发模态框 -->
     <!-- 添加成果 -->
@@ -167,7 +167,7 @@
                 </div>
                 <div class="modal-body">
                     <h3>申请理由</h3>
-                    <textarea id="reason"></textarea>
+                    <textarea style="width: 100%" id="reason"></textarea>
                     <div class="input-group input-group-lg" style="margin-top: 5px">
                         <span class="input-group-addon">联系方式</span>
                         <input class="form-control" id="contact_num"  aria-describedby="sizing-addon1">

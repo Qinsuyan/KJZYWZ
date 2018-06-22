@@ -1,9 +1,9 @@
 var e_info = new Vue ({
     el: '#expert_info',
     data: {
-        image_url: 'img/xcbz.png',
-        name: '',
-        info: '',
+        image_url: 'img/default.jpg',
+        name: 'default',
+        info: '这个人没有自我介绍',
         point: 0
     }
 })
@@ -77,16 +77,18 @@ $(document).ready(function () {
         e_info.info = response.introduction || '这个人没有自我介绍';
         e_info.image_url = response.image || 'img/default.jpg';
         e_info.point = response.point || 0;
-        type = response.type;
+        type = response.type || 'user';
         res_buy = response.buyresources;
     })
-    if(type == null)
+    console.log('type:'+type);
+    if(type === 'user')
     {
-        $("[role='expert_only']").addClass('hidden');
+        $("[name='expert_only']").addClass('hidden');
+        $("#expert_btn").addClass('hidden');
         $('#graph-chart').addClass('invisible');
     }
     if (type === 'expert') {
-        $("[role='user_only']").addClass('hidden');
+        $("#user_btn").addClass('hidden');
         var temps =[];
         var expert_settings = {
             "async": false,
@@ -220,6 +222,7 @@ function upload_sheet() {
     form.append("explain", reason);
     form.append("contact", contact);
     form.append("user_id", LoginUserId);
+    console.log(form);
 
     var settings = {
         "async": false,
