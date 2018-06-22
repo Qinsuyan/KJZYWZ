@@ -22,12 +22,9 @@ function getPath(file) {
 
 $(document).ready(function () {
 
-<<<<<<< Updated upstream
 
     var userid = 3;
     userid = localStorage.getItem("LoginIN");
-=======
->>>>>>> Stashed changes
     if(userid==null){
         AlreadyLogin = false;
     }else{
@@ -44,7 +41,6 @@ $(document).ready(function () {
         $("#Nav_Bar_Logined").addClass("hidden");
     }
     console.log(LoginUserId);
-<<<<<<< Updated upstream
     console.log("reamklkljkljkljjkljklkldy");
 
     $("#image_upload").bind("input propertychange",function () {
@@ -54,9 +50,6 @@ $(document).ready(function () {
         );
 
     })
-=======
-    //console.log("reamklkljkljkljjkljklkldy");
->>>>>>> Stashed changes
 });
 function LogOut(){
     localStorage.removeItem("LoginIN");
@@ -212,7 +205,6 @@ new Vue({
             console.log( myList[result].id);
         }
         /* $.get(url, function (data) {
-
          })*/
     }
 })
