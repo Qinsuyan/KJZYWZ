@@ -1,15 +1,116 @@
-const server='http://127.0.0.1:8000/resource/Search/?pk='; // 资源
-const server2='http://127.0.0.1:8000/user/User/';  //用户
+const server0='http://149.28.199.19:8888/resource/Search/?pk='; // 资源
+const server2='http://149.28.199.19:8888/user/User/';  //用户
+const server3='http://149.28.199.19:8888/resource/SearchExpert/';  //专家
+const server4="http://149.28.199.19:8888/label/";   //label
+const server5="http://149.28.199.19:8888/relation/TradeRecord/buy/";   //购买
 $(document).ready(function () {
 
     //var  resource_id=$.query.get("resource_id");
+    var AlreadyLogin = false;
+    var resource_id=1;
     var author_id;
     var host_id;
+    var userid = 3;
+    userid = localStorage.getItem("LoginIN");
 
-    /*var purchase_data={
-        user_id:author_id,
+    if(userid==null){
+        AlreadyLogin = false;
+    }else{
+        AlreadyLogin = true;
+    }
+    if(AlreadyLogin){
+        $("#Nav_Bar_Logined").removeClass("hidden");
+        $("#Nav_Bar_UnLogin").addClass("hidden");
+        Vue.set(datatest,'LoginUserId',userid);
+    }else{
+        $("#Nav_Bar_UnLogin").removeClass("hidden");
+        $("#Nav_Bar_Logined").addClass("hidden");
+    }
+  //  var list_id=new Array();
+
+    var purchase_data={
+        user_id:userid,
         resource_id:resource_id
-    }*/
+    }
+    $.ajax({             //获取资源信息
+        type: 'GET',
+        url: server0,
+        data: resource_id,
+        contentType: false,
+        async: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+
+            vm.$data.name=data.name;
+            for(var index=0;index<data.ownlabels.length;index++)
+            {
+                var list_id=data.ownlabels;
+                for(index in list_id)
+                {
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://149.28.199.19:8888/label/'+list_id[index]+'/',
+                        contentType: false,
+                        async: false,
+                        cache: false,
+                        processData: false,
+                        success:function(data){
+                            vm.$data.resource_labels[index]={"name":data};
+                        }
+                    });
+                }
+            }
+            if(data.type=="paper")
+            {
+                vm.$data.resource_keyword=data.keyword;
+                vm.$data.abstract=data.abstract;
+                vm.$data.value=data.value;
+                vm.$data.is_paper=true;
+                vm.$data.not_paper=false;
+                vm.$data.resource_pdf=data.path;
+            }
+            else
+            {
+                vm.$data.is_paper=false;
+                vm.$data.not_paper=true;
+            }
+        }
+    });
+    $.ajax({          //获取专家信息
+        type: 'POST',
+        url: server3,
+        data: resource_id,
+        contentType: false,
+        async: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+            author_id=data.id;
+            vm.$data.author_name=data.name;
+            vm.$data.author_introduction=data.introduction;
+            vm.$data.author_avatar=data.image;
+
+        }
+    });
+    $.ajax({      //获取用户购买列表
+        type: 'GET',
+        url: server2,
+        data: userid,
+        contentType: false,
+        async: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+            for(var index=0;index<data.buyresources.length;index++){
+                if(resource_id===data.buyresources[index])
+                {
+
+                }
+            }
+
+        }
+    });
     var vm=new Vue({
         el:'#infomation',
         data:{
@@ -21,11 +122,15 @@ $(document).ready(function () {
             '统.本文通过解构区块链的核心要素,提出了区块链系统的基础架构模型,详细阐述了区块链及与之相关的' +
             '比特币的基本原理、技术、方法与应用现状,讨论了智能合约的理念、应用和意义,介绍了基于区块链的平行社会' +
             '发展趋势,致力于为未来相关研究提供有益的指导与借鉴. ',
+            resource_keyword:'123',
+            resource_labels:[],
+            author_id:author_id,
             value:'100',
             resource_pdf:null,
-            is_purchase:false,             //是否购买
+            not_purchase:false,             //是否购买
             is_paper:false,                //是否论文
             not_paper:true,
+            is_purchase:false,
             contact:'123456',
             author_name:'某教授',
             author_jpg:null,
@@ -36,18 +141,24 @@ $(document).ready(function () {
         },
         method:{
             purchase:function () {
+                var temp={
+                    user_id:host_id,
+                    resource_id:resource_id
+                }
                 $.ajax({
-                    type: 'GET',
-                    url: server,
-                    data: resource_id,
+                    type: 'POST',
+                    url: server5,
+                    data: temp,
                     contentType: false,
                     async: false,
                     cache: false,
                     processData: false,
                     success: function (data) {
-                        if(data.status== "0")
+                        if(data.status== 200)
                         {
-
+                            aler("购买成功！");
+                            this.not_purchase=false;
+                            this.is_purchase=true;
                         }
                     }
                 });
@@ -55,81 +166,23 @@ $(document).ready(function () {
             }
         }
     });
-    $.ajax({             //获取资源信息
-        type: 'GET',
-        url: server,
-        data: resource_id,
-        contentType: false,
-        async: false,
-        cache: false,
-        processData: false,
-        success: function (data) {
 
-            vm.$data.name=data.name;
-            vm.$data.id=data.resource_id;
-            vm.$data.abstract=data.abstract;
-            vm.$data.value=data.value;
-            author_id=data.user_id;
-            if(data.type=="paper")
-            {
-                vm.$data.is_paper=true;
-                vm.$data.resource_pdf=data.path;
+   /* for(var index=0;index<list_id.length;index++)
+    {
+        $.ajax({      //获取用户购买列表
+            type: 'GET',
+            url: server4,
+            data: list_id[index],
+            contentType: false,
+            async: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                vm.$data.resource_labels[index]={"name":data}
+
             }
-            else
-            {
-                vm.$data.is_paper=false;
-            }
-        }
-    });
-    $.ajax({          //获取专家信息
-        type: 'GET',
-        url: server2,
-        data: author_id,
-        contentType: false,
-        async: false,
-        cache: false,
-        processData: false,
-        success: function (data) {
-
-            vm.$data.author_name=data.name;
-            vm.$data.author_introduction=data.introduction;
-            vm.$data.author_avatar=data.image;
-
-        }
-    });
-    $.ajax({       //获取专家信息
-        type: 'GET',
-        url: server2,
-        data: author_id,
-        contentType: false,
-        async: false,
-        cache: false,
-        processData: false,
-        success: function (data) {
-
-            vm.$data.author_name=data.name;
-            vm.$data.author_introduction=data.introduction;
-
-        }
-    });
-    $.ajax({      //获取用户购买列表
-        type: 'GET',
-        url: server2,
-        data: host_id,
-        contentType: false,
-        async: false,
-        cache: false,
-        processData: false,
-        success: function (data) {
-            for(var index=0;index<data.buyresources.length();index++){
-                if(resource_id===data.buyresources[index])
-                {
-
-                }
-            }
-
-        }
-    });
+        });
+    }*/
 
 
     /*var vm=new Vue({
