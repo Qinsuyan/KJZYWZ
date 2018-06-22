@@ -17,6 +17,15 @@ var e_res = new Vue ({
     }
 })
 
+var datatest = {
+    LoginUserId:0
+}
+new Vue({
+    el: '#Bar_UserId',
+    data: datatest,
+})
+
+
 const server = "";
 var AlreadyLogin = false;
 var id = 0;

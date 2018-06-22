@@ -53,6 +53,7 @@ $(document).ready(function () {
 });
 function LogOut(){
     localStorage.removeItem("LoginIN");
+    window.location.href("index.html");
 }
 function Login()
 {
@@ -234,8 +235,7 @@ function searchByResourceName(keyword){
                 var resource_name = data[index].name;
                 var resource_type = data[index].type;
                 var resource_labels = data[index].ownlabels;
-                var resource_foucs = "Foucs:"
-
+                var resource_foucs = "Foucs:";
                 for( indexx in resource_labels){
                     $.ajax({
                         type: 'GET',
@@ -248,6 +248,7 @@ function searchByResourceName(keyword){
                             resource_foucs = resource_foucs + data.name+',';
                         }
                     })
+
                 }
                 var a={
                     id:resource_id,
@@ -268,64 +269,64 @@ function searchByExpertName(keyword){
         return ;
     }
 
+
+    var resource_id;
+    var resource_name ;
+    var resource_type ;
+    var resource_labels ;
+    var resource_author = "Author:";
+
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         url: 'http://149.28.199.19:8888/user/Expert/?name='+keyword,
         contentType: false,
         async: false,
         cache: false,
         processData: false,
         success: function (data) {
-            for(index in data.ownresources){
-                var formdata = new FormData();
-                formdata.append("id",data.ownresources[index]);
+            console.log(data);
+            for(index in data.ownresources){//[9204, 12326, 19224, 20029]
+                console.log(data[index]);
+
+                var resource_id = data.ownresources[index];
+                var resource_name;
+                var resource_type;
+                var resource_labels;
                 $.ajax({
-                    type: 'POST',
-                    url: 'http://149.28.199.19:8888/resource/SearchExpert/',
-                    contentType: false,
-                    async: false,
-                    cache: false,
-                    processData: false,
+                    type:'GET',
+                    url:'http://149.28.199.19:8888/resource/?pk='+resource_id,
+                    async:false,
+                    contentType:false,
                     success:function(data){
-
-                        var resource_id = data.ownresources[index];
-                        var resource_name = data.name;
-                        var resource_type = data.type;
-                        var resource_labels = data.ownlabels;
-                        var resource_foucs = "Focus:";
-
-                        for( indexx in resource_labels){
-
-                            $.ajax({
-                                type: 'GET',
-                                url: 'http://149.28.199.19:8888/label/'+resource_labels[indexx]+'/',
-                                contentType: false,
-                                async: false,
-                                cache: false,
-                                processData: false,
-                                success:function(data){
-                                    resource_foucs = resource_foucs + data.name+',';
-                                }
-                            })
-                        }
-                        var a={
-                            id:resource_id,
-                            name:resource_name,
-                            type:resource_type,
-                            focus:resource_foucs.substring(0,resource_foucs.length-1),
-                        };
-                        myList.push(a);
+                        resource_name = data.name;
+                        resource_type = data.type;
+                        resource_labels = data.ownlabels;
                     }
-
-
                 })
-
+                var resource_foucs = "Foucs:";
+                for( indexx in resource_labels){
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://149.28.199.19:8888/label/'+resource_labels[indexx]+'/',
+                        contentType: false,
+                        async: false,
+                        cache: false,
+                        processData: false,
+                        success:function(data){
+                            console.log(data);
+                            resource_foucs = resource_foucs + data.name+',';
+                        }
+                    })
+                }
+                var a={
+                    id:resource_id,
+                    name:resource_name,
+                    type:resource_type,
+                    focus:resource_foucs.substring(0,resource_foucs.length-1),
+                }
+                myList.push(a);
             }
         }
     });
 }
 
-
-function searchByInstitution(keyWord){
-
-}
