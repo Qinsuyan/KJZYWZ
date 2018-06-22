@@ -68,6 +68,7 @@
         </div>
     </div>
     <div style="text-align: center">
+            <button role="private" role="user_only" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#be_expert">申请成为专家</button>
             <button role="private" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#buy_point">购买积分</button>
             <button role="private" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#change_info">修改个人信息</button>
             <button role="private" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#upload_res">添加成果</button>
@@ -157,6 +158,29 @@
         </div><!-- /.modal -->
     </div>
     <!-- 修改个人信息 end -->
+    <!-- 申请成为科技专家 -->
+    <div class="modal fade" id="be_expert"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">申请单</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>申请理由</h3>
+                    <textarea id="reason"></textarea>
+                    <div class="input-group input-group-lg" style="margin-top: 5px">
+                        <span class="input-group-addon">联系方式</span>
+                        <input class="form-control" id="contact_num"  aria-describedby="sizing-addon1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="upload_sheet()">提交</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 申请成为科技专家 end -->
     <!-- modal end -->
     <!-- 下面开始关系网 -->
     <div id="graph-chart" class="col-sm-6 col-md-4" style='width:600px;height:400px;margin-left: 25%'></div>

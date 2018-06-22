@@ -18,7 +18,15 @@ var e_res = new Vue ({
 })
 
 const server = "";
+var LoginUserId = 0;
 var AlreadyLogin = false;
+var datatest = {
+    LoginUserId:0
+}
+new Vue({
+    el: '#Bar_UserId',
+    data: datatest,
+})
 var id = 0;
 var type = '';
 var res_paper = [];
@@ -69,6 +77,7 @@ $(document).ready(function () {
         $('#graph-chart').addClass('invisible');
     }
     if (type === 'expert') {
+        $("[role='user_only']").addClass('hidden');
         var temps =[];
         var expert_settings = {
             "async": false,
@@ -90,7 +99,6 @@ $(document).ready(function () {
                 "method": "GET",
                 "headers": {}
             }
-            console.log(res_settings.url);
             $.ajax(res_settings).done(function (resp) {
                 console.log(resp);
                 if(resp.type === 'paper')
@@ -104,22 +112,19 @@ $(document).ready(function () {
             });
         };
 
-        var form = new FormData();
-        form.append("name", e_info.name);
+        var temp_url = "http://149.28.199.19:8888/user/Expert/Relation/?name=" + e_info.name;
+        temp_url = temp_url.replace(/\s/g, '+');
+        console.log(temp_url);
         var rel_settings = {
-            "async": true,
+            "async": false,
             "crossDomain": true,
-            "url": "http://149.28.199.19:8888/relation/ExpertRelation/",
-            "method": "POST",
-            "headers": {},
-            "processData": false,
-            "contentType": false,
-            "mimeType": "multipart/form-data",
-            "data": form
+            "url": temp_url,
+            "method": "GET",
+            "headers": {}
         };
         $.ajax(rel_settings).done(function (response) {
             console.log(response);
-            rel_exp = response.expert_relation;
+            rel_exp = response;
         });
     }
     e_res.resources = res_buy;
@@ -195,10 +200,34 @@ function buy_point() {
 }
 
 function change_info() {
-    var name = $(" input[ id='user_name'] ").val();
     var info = $(" input[ id='user_info'] ").val();
-    e_info.name = name;
     e_info.info = info;
+}
+
+function upload_sheet() {
+    var reason = $("textarea[ id='reason']").val();
+    var contact = $("textarea[ id='contact_num']").val();
+    var form = new FormData();
+    form.append("explain", reason);
+    form.append("contact", contact);
+    form.append("user_id", LoginUserId);
+
+    var settings = {
+        "async": false,
+        "crossDomain": true,
+        "url": "http://127.0.0.1:8000/applysheet/ExpertApplysheet/",
+        "method": "POST",
+        "headers": {},
+        "processData": false,
+        "contentType": false,
+        "mimeType": "multipart/form-data",
+        "data": form
+    }
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        alert('申请单已提交！');
+    });
 }
 
 function upload_res() {
@@ -217,7 +246,7 @@ function upload_res() {
     form.append("value", r_value);
 
     var settings = {
-        "async": true,
+        "async": false,
         "crossDomain": true,
         "url": "http://149.28.199.19:8888/resource/paper/",
         "method": "POST",
@@ -279,7 +308,7 @@ function showGraph() {
 
     for(i in rel_exp) {
         data.push({
-            name: rel_exp,
+            name: rel_exp[i],
             id: data.length
         });
         var source = 0;
