@@ -54,9 +54,6 @@ $(document).ready(function () {
         );
 
     })
-=======
-    //console.log("reamklkljkljkljjkljklkldy");
->>>>>>> Stashed changes
 });
 function LogOut(){
     localStorage.removeItem("LoginIN");
@@ -242,7 +239,8 @@ function searchByResourceName(keyword){
                 var resource_name = data[index].name;
                 var resource_type = data[index].type;
                 var resource_labels = data[index].ownlabels;
-                var resource_foucs = "Foucs:";
+                var resource_foucs = "Foucs:"
+
                 for( indexx in resource_labels){
                     $.ajax({
                         type: 'GET',
@@ -255,7 +253,6 @@ function searchByResourceName(keyword){
                             resource_foucs = resource_foucs + data.name+',';
                         }
                     })
-
                 }
                 var a={
                     id:resource_id,
